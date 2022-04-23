@@ -1,13 +1,13 @@
-import { useDispatch, useSelector } from "react-redux";
-import { addMorePokemons } from "../../../../redux/slices/pokemonSlice";
-import { AppDispatch, RootState } from "../../../../redux/store";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../../../../redux/interfaces";
+import { getMorePokemons } from "../../../../redux/slices/pokemonsSlice";
 
 const ViewMorePokemons = () => {
 
     const dispatch = useDispatch<AppDispatch>();
 
     const handleViewMorePokemons = () => {
-        dispatch(addMorePokemons());
+        dispatch(getMorePokemons());
     }
 
     return (

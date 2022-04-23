@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "../../../../hooks/useForm";
-import { filterPokemons } from "../../../../redux/slices/pokemonSlice";
-import { AppDispatch, RootState } from "../../../../redux/store";
+import { filterPokemons } from "../../../../redux/slices/pokemonsSlice";
+import { AppDispatch, RootState } from "../../../../redux/interfaces";
 import { ContainerSearchFormStyled, TitleFormStyled, FormStyled, ButtonSearchStyled } from "./Style";
 
 const SearchForm = () => {

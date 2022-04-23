@@ -1,24 +1,25 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
-import { getPokemon } from "../../redux/slices/pokemonSlice";
-import { AppDispatch } from "../../redux/store";
+
+import { AppDispatch } from "../../redux/interfaces";
+import { getPokemon } from "../../redux/slices/pokemonDetailsSlice";
 import GoBackArrow from "./Components/GoBackArrow";
 
 const PokemonDetails = () => {
 
-    const { pokemonName = '' } = useParams();
+    const { pokemonId = '1' } = useParams();
+    const pokemonIdToInt = parseInt(pokemonId)
     const dispatch = useDispatch<AppDispatch>();
 
     useEffect(() => {
-        dispatch(getPokemon(pokemonName))
+        dispatch(getPokemon(pokemonIdToInt))
     }, [])
-
 
     return (
         <div>
             <GoBackArrow />
-            <strong>{pokemonName}</strong>
+            <strong>xd</strong>
         </div>
     )
 }

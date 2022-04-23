@@ -8,7 +8,7 @@ const Pokemon = (props: PokemonProps) => {
     const navigate = useNavigate();
 
     const handleViewPokemon = () => {
-        navigate(`/${props.name}`)
+        navigate(`/${props.id}`)
     }
 
     return (

@@ -6,7 +6,7 @@ const App = () => (
   <BrowserRouter>
     <Routes>
       <Route path="/" element={<Home />} />
-      <Route path="/:pokemonName" element={<Pokemon />} />
+      <Route path="/:pokemonId" element={<Pokemon />} />
     </Routes>
   </BrowserRouter>
 )
