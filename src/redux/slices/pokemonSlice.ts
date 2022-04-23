@@ -1,16 +1,23 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { useDispatch } from "react-redux";
+import { PokemonProps } from "../../views/home/Components/Pokemons/interfaces";
+import { AppDispatch } from "../store";
 
 export interface PokemonState {
     pokemons: any
+    amount: number
     loading: null | 'loading' | 'success' | 'failed'
+    pokemonsFiltered: []
     pokemon: any
 }
 
+
 export const getPokemons = createAsyncThunk(
     'pokemon/getPokemons',
-    async () => {
+    async (amount: number) => {
+       
         const pokemons = [];
-        for (let i = 1; i <= 30; i++) {
+        for (let i = 1; i <= amount; i++) {
             const resp = await fetch(`https://pokeapi.co/api/v2/pokemon/${i}`);
             const respToJSON = await resp.json();
             pokemons.push(respToJSON);
@@ -42,10 +49,19 @@ export const pokemonSlice = createSlice({
     name: 'pokemon',
     initialState: {
         pokemons: [],
+        amount: 20,
         loading: null,
-        pokemon: null
+        pokemonsFiltered: [],
+        pokemon: null,
+        isFiltred: false
     } as PokemonState,
     reducers: {
+        filterPokemons: (state, { payload }) => {
+            state.pokemonsFiltered = state.pokemons.filter((poke: PokemonProps) => poke.name.includes(payload))
+        },
+        addMorePokemons: (state) => {
+            state.amount += 20
+        }
     },
     extraReducers: (builder) => {
 
@@ -74,4 +90,7 @@ export const pokemonSlice = createSlice({
 
 });
 
+export const { filterPokemons, addMorePokemons } = pokemonSlice.actions;
+
 export default pokemonSlice.reducer;
+

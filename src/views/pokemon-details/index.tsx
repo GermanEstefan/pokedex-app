@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import { getPokemon } from "../../redux/slices/pokemonSlice";
 import { AppDispatch } from "../../redux/store";
+import GoBackArrow from "./Components/GoBackArrow";
 
 const PokemonDetails = () => {
 
@@ -16,8 +17,7 @@ const PokemonDetails = () => {
 
     return (
         <div>
-            <i className="fas fa-arrow-circle-left"></i>
-            <h1>Pokemon</h1>
+            <GoBackArrow />
             <strong>{pokemonName}</strong>
         </div>
     )

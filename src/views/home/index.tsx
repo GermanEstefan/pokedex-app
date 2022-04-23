@@ -1,7 +1,7 @@
-import { Outlet } from "react-router-dom";
 import Header from "./Components/Hedaer";
 import Pokemons from "./Components/Pokemons";
 import SearchForm from "./Components/SearchForm";
+import ViewMorePokemons from "./Components/ViewMorePokemons";
 import { IndexStyled } from "./IndexStyled";
 
 const Home = () => ((
@@ -9,7 +9,7 @@ const Home = () => ((
         <Header />
         <SearchForm />
         <Pokemons />
-        <Outlet />
+        <ViewMorePokemons/>
     </IndexStyled>
 ))
 

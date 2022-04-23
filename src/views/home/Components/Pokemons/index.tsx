@@ -12,14 +12,28 @@ const Pokemons = () => {
     const state = useSelector((state: RootState) => state.pokemonsReducer)
 
     useEffect(() => {
-        dispatch(getPokemons())
-    }, [])
+        dispatch(getPokemons(state.amount))
+    }, [state.amount])
+
+    console.log(state.pokemons)
 
     return (
         <PokemonsContainerStyled>
             {
                 state.loading === 'loading'
                     ? <span>Fetching data...</span>
+                    : state.loading === 'failed'
+                    ? <span>Failed to fetch</span>
+                    : state.pokemonsFiltered.length != 0
+                    ? state.pokemonsFiltered.map((poke: PokemonProps, i: number) => (
+                        <Pokemon
+                            name={poke.name}
+                            key={i}
+                            id={poke.id}
+                            types={poke.types}
+                            img={poke.img}
+                        />
+                    ))
                     : state.pokemons.map((poke: PokemonProps, i: number) => (
                         <Pokemon
                             name={poke.name}
