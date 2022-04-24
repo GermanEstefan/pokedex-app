@@ -1,14 +1,14 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import MapePokemons from "../../helpers/DataMapperPokeApi"
 import { fetchPokemon, fetchPokemonEvolution } from "../../services/pokeApi"
-import { PokemonsState } from "../interfaces"
+import { PokemonDetailsState, PokemonsState } from "../interfaces"
 
 export const getPokemon = createAsyncThunk(
     'pokemonDetails/getPokemon',
     async (pokemonId: number) => {
         const pokemon = await fetchPokemon(pokemonId);
-        const pokemonEvolution = await fetchPokemonEvolution(pokemonId);
-        const pokemonJoinedWithEvolution = Object.assign(pokemon, pokemonEvolution)
+        const pokemonEvolutionChain = await fetchPokemonEvolution(pokemonId);
+        const pokemonJoinedWithEvolution = Object.assign(pokemon, pokemonEvolutionChain)
         return MapePokemons(pokemonJoinedWithEvolution);
     } 
 )
@@ -18,7 +18,7 @@ export const pokemonDetailsSlice = createSlice({
     initialState: {
         pokemon: [],
         loading: null,
-    } as PokemonsState,
+    } as PokemonDetailsState,
     reducers: {
     },
     extraReducers: (builder) => {

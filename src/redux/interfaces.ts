@@ -11,5 +11,10 @@ export interface PokemonsState {
     }
     loading: null | 'loading' | 'success' | 'failed'
     pokemonsFiltered: []
-    pokemon: any
 }
+
+export interface PokemonDetailsState {
+    pokemon: any
+    loading: null | 'loading' | 'success' | 'failed'
+}
+

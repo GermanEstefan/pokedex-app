@@ -14,6 +14,9 @@ export const fetchPokemon = async (pokemonId: number) => {
 }
 
 export const fetchPokemonEvolution = async (idPokemon: number) => {
-    const resp = await fetch(`https://pokeapi.co/api/v2/evolution-chain/${idPokemon}`);
-    return await resp.json();
+    const resp = await fetch(`https://pokeapi.co/api/v2/pokemon-species/${idPokemon}`);
+    const { evolution_chain } = await resp.json();
+    const resp2 = await fetch(evolution_chain.url)
+    const { chain } = await resp2.json();
+    return chain;
 }

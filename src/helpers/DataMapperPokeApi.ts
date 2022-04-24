@@ -14,14 +14,14 @@ const MapePokemons = (data: any) => {
       
         const typesPoke = data.types.map((type: any) => type.type.name);
         const abilites = data.abilities.map((abilitie: any) => abilitie.ability.name);
-        
+
         return {
             "name": data.name,
             "id": data.id,
             "types": typesPoke,
             "img": data.sprites.other.dream_world.front_default,
             "abilities": abilites,
-            "evolutionChain":data.chain
+            "evolutionChain": data.evolves_to
         }
     }
 
