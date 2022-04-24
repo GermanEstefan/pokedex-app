@@ -8,7 +8,7 @@ export const fetchPokemons = async (start: number, end: number) => {
     return pokemons;
 }
 
-export const fetchPokemon = async (pokemonId: number) => {
+export const fetchPokemon = async (pokemonId: number | string) => {
     const resp = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonId}`);
     return await resp.json();
 }
@@ -17,6 +17,25 @@ export const fetchPokemonEvolution = async (idPokemon: number) => {
     const resp = await fetch(`https://pokeapi.co/api/v2/pokemon-species/${idPokemon}`);
     const { evolution_chain } = await resp.json();
     const resp2 = await fetch(evolution_chain.url)
-    const { chain } = await resp2.json();
-    return chain;
+    const { chain:evos } = await resp2.json();
+    console.log(evos)
+    const anyFun = () => {
+        let chain: any = [];
+        
+        if (evos) {
+            chain.push(evos.species.name)
+
+            if (evos.evolves_to.length) {
+                chain.push(evos.evolves_to[0].species.name)
+
+                if (evos.evolves_to[0].evolves_to.length) {
+                    chain.push(evos.evolves_to[0].evolves_to[0].species.name)
+                }
+            }
+        }
+        return chain;
+    }
+
+    return anyFun();
+    
 }

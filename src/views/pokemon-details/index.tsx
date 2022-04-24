@@ -32,7 +32,7 @@ const PokemonDetails = () => {
                 <ul>
                     {
                         pokemon?.abilities?.map((ability: any) => (
-                            <li>{ability}</li>
+                            <li key={ability}>{ability}</li>
                         ))
                     }
                 </ul>

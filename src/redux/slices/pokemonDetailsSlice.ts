@@ -7,10 +7,20 @@ export const getPokemon = createAsyncThunk(
     'pokemonDetails/getPokemon',
     async (pokemonId: number) => {
         const pokemon = await fetchPokemon(pokemonId);
-        const pokemonEvolutionChain = await fetchPokemonEvolution(pokemonId);
-        const pokemonJoinedWithEvolution = Object.assign(pokemon, pokemonEvolutionChain)
-        return MapePokemons(pokemonJoinedWithEvolution);
-    } 
+        const evolutions = await fetchPokemonEvolution(pokemonId);
+        const dataOfEvolutions = await Promise.all(
+            evolutions.map(async (name: any) => {
+                const { sprites, name: nameEvo, id } = await fetchPokemon(name);
+                return { sprites, nameEvo, id }
+            })
+        )
+        const dataOfEvolutionsToObj = Object.assign({}, dataOfEvolutions)
+        const objeteiro = {
+            dataEvo: dataOfEvolutionsToObj
+        }
+        const dataJoined = Object.assign(pokemon, objeteiro)
+        return MapePokemons(dataJoined);
+    }
 )
 
 export const pokemonDetailsSlice = createSlice({
