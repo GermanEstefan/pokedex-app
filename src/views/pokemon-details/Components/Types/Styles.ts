@@ -1,13 +1,6 @@
 import styled from "styled-components";
 import { TypePokemonStyled } from "../../../home/Components/Pokemon/Styles";
 
-export const GoBackArrowStyled = styled.i`
-    position: fixed;
-    top: 10px;
-    left:20px;
-    font-size: 3.5rem;
-`;
-
 export const TypesContainer = styled.div`
     display:flex;
     align-items:center;

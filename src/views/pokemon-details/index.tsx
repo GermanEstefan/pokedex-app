@@ -4,7 +4,12 @@ import { useParams } from "react-router-dom";
 
 import { AppDispatch, RootState } from "../../redux/interfaces";
 import { getPokemon } from "../../redux/slices/pokemonDetailsSlice";
+import Evolutions from "./Components/Evolutions/Evolutions";
 import GoBackArrow from "./Components/GoBackArrow";
+import ImageAndInfo from "./Components/ImageAndInfo/ImageAndInfo";
+import NameAndId from "./Components/NameAndId/NameAndId";
+import Types from "./Components/Types/Types";
+import { IndexStyled } from "./IndexStyles";
 
 const PokemonDetails = () => {
 
@@ -14,33 +19,25 @@ const PokemonDetails = () => {
 
     const { pokemon } = useSelector((state: RootState) => state.pokemonDetailsSlice)
 
-
     useEffect(() => {
         dispatch(getPokemon(pokemonIdToInt))
     }, [])
 
     return (
-        <div>
+
+        <IndexStyled>
+
             <GoBackArrow />
-            <div>
-                <h1>{pokemon.name}</h1>
-                <small>{pokemon.id}</small>
-            </div>
-            <img src={pokemon.img} alt={pokemon.name} />
-            <div>
-                <h2>Types</h2>
-                <ul>
-                    {
-                        pokemon?.abilities?.map((ability: any) => (
-                            <li key={ability}>{ability}</li>
-                        ))
-                    }
-                </ul>
-            </div>
-            <div>
-                <h2>Evolutions:</h2>
-            </div>
-        </div>
+
+            <NameAndId pokemonName={pokemon.name} pokemonId={pokemonId} />
+
+            <ImageAndInfo img={pokemon.img} imgAlt={pokemon.name} />
+
+            <Types types={pokemon.types} />
+
+            <Evolutions pokemonsEvo={pokemon.dataEvo} />
+
+        </IndexStyled>
     )
 }
 

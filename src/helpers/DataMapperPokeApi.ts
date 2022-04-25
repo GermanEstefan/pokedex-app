@@ -1,5 +1,5 @@
 
-const MapePokemons = async (data: any) => {
+const MapePokemons =  (data: any) => {
     if (Array.isArray(data)) {
         return data.map((poke: any) => {
             const typesPoke = poke.types.map((type: any) => type.type.name);
@@ -20,7 +20,8 @@ const MapePokemons = async (data: any) => {
             "types": typesPoke,
             "img": data.sprites.other.dream_world.front_default,
             "abilities": abilites,
-            "dataEvo": data.dataEvo
+            "dataEvo": data.dataEvo,
+            "weight": data.weight
         }
     }
 

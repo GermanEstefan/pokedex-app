@@ -13,8 +13,4 @@ export interface PokemonsState {
     pokemonsFiltered: []
 }
 
-export interface PokemonDetailsState {
-    pokemon: any
-    loading: null | 'loading' | 'success' | 'failed'
-}
 

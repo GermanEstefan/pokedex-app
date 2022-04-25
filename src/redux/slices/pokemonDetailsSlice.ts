@@ -1,7 +1,27 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import MapePokemons from "../../helpers/DataMapperPokeApi"
 import { fetchPokemon, fetchPokemonEvolution } from "../../services/pokeApi"
-import { PokemonDetailsState, PokemonsState } from "../interfaces"
+
+export interface DataEvo {
+    img: string
+    nameEvo: string
+    id: number
+}
+
+interface PokemonDetails {
+    name: string
+    id: number
+    types: Array<string>
+    img: string
+    abilities: Array<string>
+    dataEvo: Array<DataEvo>
+    weight: number
+}
+
+interface PokemonDetailsSlice {
+    pokemon: PokemonDetails
+    loading: null | 'loading' | 'success' | 'failed'
+}
 
 export const getPokemon = createAsyncThunk(
     'pokemonDetails/getPokemon',
@@ -11,12 +31,11 @@ export const getPokemon = createAsyncThunk(
         const dataOfEvolutions = await Promise.all(
             evolutions.map(async (name: any) => {
                 const { sprites, name: nameEvo, id } = await fetchPokemon(name);
-                return { sprites, nameEvo, id }
+                return { img: sprites.other.dream_world.front_default, nameEvo, id }
             })
         )
-        const dataOfEvolutionsToObj = Object.assign({}, dataOfEvolutions)
         const objeteiro = {
-            dataEvo: dataOfEvolutionsToObj
+            dataEvo: dataOfEvolutions
         }
         const dataJoined = Object.assign(pokemon, objeteiro)
         return MapePokemons(dataJoined);
@@ -26,9 +45,9 @@ export const getPokemon = createAsyncThunk(
 export const pokemonDetailsSlice = createSlice({
     name: 'pokemonDetails',
     initialState: {
-        pokemon: [],
+        pokemon: {},
         loading: null,
-    } as PokemonDetailsState,
+    } as PokemonDetailsSlice,
     reducers: {
     },
     extraReducers: (builder) => {
@@ -37,7 +56,7 @@ export const pokemonDetailsSlice = createSlice({
             state.loading = 'loading'
         })
         builder.addCase(getPokemon.fulfilled, (state, action) => {
-            state.pokemon = action.payload
+            state.pokemon = action.payload as PokemonDetails
             state.loading = 'success'
         })
         builder.addCase(getPokemon.rejected, (state, action) => {
