@@ -4,10 +4,10 @@ import { useParams } from "react-router-dom";
 
 import { AppDispatch, RootState } from "../../redux/interfaces";
 import { getPokemon } from "../../redux/slices/pokemonDetailsSlice";
-import Evolutions from "./Components/Evolutions/Evolutions";
+import Evolutions from "./Components/Evolutions";
 import GoBackArrow from "./Components/GoBackArrow";
-import ImageAndInfo from "./Components/ImageAndInfo/ImageAndInfo";
-import NameAndId from "./Components/NameAndId/NameAndId";
+import ImageAndInfo from "./Components/ImageAndInfo";
+import NameAndId from "./Components/NameAndId";
 import Types from "./Components/Types/Types";
 import { IndexStyled } from "./IndexStyles";
 
@@ -21,7 +21,7 @@ const PokemonDetails = () => {
 
     useEffect(() => {
         dispatch(getPokemon(pokemonIdToInt))
-    }, [])
+    }, [dispatch,pokemonIdToInt])
 
     return (
 

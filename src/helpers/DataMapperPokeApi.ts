@@ -1,7 +1,7 @@
 
-const MapePokemons =  (data: any) => {
-    if (Array.isArray(data)) {
-        return data.map((poke: any) => {
+const MapePokemons =  (pokemonsFromApi: any) => {
+    if (Array.isArray(pokemonsFromApi)) {
+        return pokemonsFromApi.map((poke: any) => {
             const typesPoke = poke.types.map((type: any) => type.type.name);
             return {
                 "name": poke.name,
@@ -12,16 +12,16 @@ const MapePokemons =  (data: any) => {
         })
     } else {
 
-        const typesPoke = data.types.map((type: any) => type.type.name);
-        const abilites = data.abilities.map((abilitie: any) => abilitie.ability.name);
+        const typesPoke = pokemonsFromApi.types.map((type: any) => type.type.name);
+        const abilites = pokemonsFromApi.abilities.map((abilitie: any) => abilitie.ability.name);
         return {
-            "name": data.name,
-            "id": data.id,
+            "name": pokemonsFromApi.name,
+            "id": pokemonsFromApi.id,
             "types": typesPoke,
-            "img": data.sprites.other.dream_world.front_default,
+            "img": pokemonsFromApi.sprites.other.dream_world.front_default,
             "abilities": abilites,
-            "dataEvo": data.dataEvo,
-            "weight": data.weight
+            "dataEvo": pokemonsFromApi.dataEvo,
+            "weight": pokemonsFromApi.weight
         }
     }
 

@@ -1,4 +1,9 @@
-export const fetchPokemons = async (start: number, end: number) => {
+interface Range {
+    start: number
+    end: number
+}
+
+export const fetchPokemons = async ({ start, end }: Range) => {
     const pokemons = [];
     for (let i = start; i <= end; i++) {
         const resp = await fetch(`https://pokeapi.co/api/v2/pokemon/${i}`);
@@ -17,11 +22,11 @@ export const fetchPokemonEvolution = async (idPokemon: number) => {
     const resp = await fetch(`https://pokeapi.co/api/v2/pokemon-species/${idPokemon}`);
     const { evolution_chain } = await resp.json();
     const resp2 = await fetch(evolution_chain.url)
-    const { chain:evos } = await resp2.json();
+    const { chain: evos } = await resp2.json();
     console.log(evos)
     const anyFun = () => {
         let chain: any = [];
-        
+
         if (evos) {
             chain.push(evos.species.name)
 
@@ -37,5 +42,5 @@ export const fetchPokemonEvolution = async (idPokemon: number) => {
     }
 
     return anyFun();
-    
+
 }

@@ -1,18 +1,19 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useForm } from "../../../../hooks/useForm";
-import { filterPokemons } from "../../../../redux/slices/pokemonsSlice";
-import { AppDispatch, RootState } from "../../../../redux/interfaces";
+
+import { AppDispatch } from "../../../../redux/interfaces";
 import { ContainerSearchFormStyled, TitleFormStyled, FormStyled, ButtonSearchStyled } from "./Style";
+import MapePokemons from "../../../../helpers/DataMapperPokeApi";
+import { filterOrGetPokemons } from "../../../../redux/slices/pokemonsSlice";
 
 const SearchForm = () => {
 
     const dispatch = useDispatch<AppDispatch>();
     const { values, handleChange } = useForm({ namePokemon: '' });
-    const state = useSelector((state: RootState) => state.pokemonsReducer.pokemons);
 
-    const handleFilterPokemons = (e: any) => {
+    const handleFilterPokemons = async (e: any) => {
         e.preventDefault();
-        dispatch(filterPokemons(values.namePokemon));
+        dispatch(filterOrGetPokemons(values.namePokemon));
     }
 
     return (

@@ -1,13 +1,18 @@
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { capitalizeString } from "../../../../helpers/capitalizeString";
+import { AppDispatch } from "../../../../redux/interfaces";
+import { resetState } from "../../../../redux/slices/pokemonsSlice";
 import { PokemonProps } from "../Pokemons/interfaces";
 import { PokemonContainerStyled, IdPokemonStyled, TypesPokemonStyled, TypePokemonStyled } from "./Styles";
 
 const Pokemon = (props: PokemonProps) => {
 
     const navigate = useNavigate();
+    const dispatch = useDispatch<AppDispatch>();
 
     const handleViewPokemon = () => {
+        dispatch(resetState());
         navigate(`/${props.id}`)
     }
 

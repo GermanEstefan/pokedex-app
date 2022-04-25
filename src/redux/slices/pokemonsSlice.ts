@@ -1,54 +1,94 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import MapePokemons from "../../helpers/DataMapperPokeApi";
 import { fetchPokemons } from "../../services/pokeApi";
-import { PokemonProps } from "../../views/home/Components/Pokemons/interfaces";
-import { PokemonsState } from "../interfaces";
 
-export const getPokemons = createAsyncThunk(
-    'pokemon/getPokemons',
-    async (interval: any) => {
-        const pokemons = await fetchPokemons(interval.start, interval.end);
-        return MapePokemons(pokemons)
-    }
-)
+interface PokemonsSlice {
+    pokemonsData: PokemonsData
+    loading: 'loading' | 'success' | 'failed'
+}
 
-export const pokemonSlice = createSlice({
-    name: 'pokemon',
-    initialState: {
-        pokemons: [],
-        pokemonsFiltered: [],
-        amount: {
+interface PokemonsData {
+    countRange: countRange
+    pokemons: Array<Pokemons>
+}
+
+interface countRange {
+    start: number
+    end: number
+}
+
+interface Pokemons {
+    name: string
+    id: number
+    types: Array<string>
+    img: string
+}
+
+const initialState = {
+    pokemonsData: {
+        countRange: {
             start: 1,
             end: 20
         },
-        loading: null,
-    } as PokemonsState,
+        pokemons: []
+    },
+    loading: 'loading',
+} as PokemonsSlice
+
+export const pokemonSlice = createSlice({
+    name: 'pokemons',
+    initialState,
     reducers: {
-        filterPokemons: (state, { payload }) => {
-            state.pokemonsFiltered = state.pokemons.filter((poke: PokemonProps) => poke.name.includes(payload))
-        },
         getMorePokemons: (state) => {
-            state.amount.start += 20
-            state.amount.end += 20
+            state.pokemonsData.countRange.start += 20;
+            state.pokemonsData.countRange.end += 20
+        },
+        resetState: (state) => {
+            state.loading = 'loading'
+            state.pokemonsData.countRange.start = 1
+            state.pokemonsData.countRange.end = 20
+            state.pokemonsData.pokemons = []
         }
     },
     extraReducers: (builder) => {
-
-        builder.addCase(getPokemons.pending, (state, action) => {
+        builder.addCase(getPokemons.pending, (state) => {
             state.loading = 'loading'
         })
         builder.addCase(getPokemons.fulfilled, (state, action) => {
-            state.pokemons = state.pokemons.concat(action.payload)
+            state.pokemonsData.pokemons = state.pokemonsData.pokemons.concat(action.payload)
             state.loading = 'success'
-        })
-        builder.addCase(getPokemons.rejected, (state, action) => {
-            state.loading = 'failed'
         })
     }
 
 });
 
-export const { filterPokemons, getMorePokemons } = pokemonSlice.actions;
+export const getPokemons = createAsyncThunk(
+    'pokemons/getPokemons',
+    async (countRange: countRange) => {
+        const pokemons = await fetchPokemons(countRange);
+        return MapePokemons(pokemons)
+    }
+)
+
+export const filterOrGetPokemons = createAsyncThunk(
+    'pokemons/filterPokemons',
+    async (name: any, thunkAPI) => {
+        const { rejectWithValue, getState } = thunkAPI;
+        const state: any = getState()
+        const aver = state.pokemonsReducer.pokemons.filter((poke: any) => poke.name.includes(name))
+        if (aver.length === 0) {
+            const resp = await fetch(`https://pokeapi.co/api/v2/pokemon/${name.trim().toLocaleLowerCase()}`)
+            const respToJson = await resp.json();
+            return MapePokemons([respToJson]);
+        } else {
+            return aver;
+        }
+    }
+)
+
+
+
+export const { getMorePokemons, resetState } = pokemonSlice.actions;
 
 export default pokemonSlice.reducer;
 
