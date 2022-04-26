@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import MapePokemons from "../../helpers/DataMapperPokeApi";
-import { fetchPokemons } from "../../services/pokeApi";
+import { fetchPokemon, fetchPokemons } from "../../services/pokeApi";
+import { RootState } from "../interfaces";
 
 interface PokemonsSlice {
     pokemonsData: PokemonsData
@@ -10,6 +11,7 @@ interface PokemonsSlice {
 interface PokemonsData {
     countRange: countRange
     pokemons: Array<Pokemons>
+    pokemonsFiltered: Array<Pokemons> 
 }
 
 interface countRange {
@@ -24,20 +26,19 @@ interface Pokemons {
     img: string
 }
 
-const initialState = {
-    pokemonsData: {
-        countRange: {
-            start: 1,
-            end: 20
-        },
-        pokemons: []
-    },
-    loading: 'loading',
-} as PokemonsSlice
-
 export const pokemonSlice = createSlice({
     name: 'pokemons',
-    initialState,
+    initialState: {
+        pokemonsData: {
+            countRange: {
+                start: 1,
+                end: 20
+            },
+            pokemons: [],
+            pokemonsFiltered:[]
+        },
+        loading: 'loading',
+    } as PokemonsSlice,
     reducers: {
         getMorePokemons: (state) => {
             state.pokemonsData.countRange.start += 20;
@@ -51,12 +52,20 @@ export const pokemonSlice = createSlice({
         }
     },
     extraReducers: (builder) => {
+        
         builder.addCase(getPokemons.pending, (state) => {
             state.loading = 'loading'
         })
         builder.addCase(getPokemons.fulfilled, (state, action) => {
             state.pokemonsData.pokemons = state.pokemonsData.pokemons.concat(action.payload)
             state.loading = 'success'
+        })
+
+        builder.addCase(searchPokemons.fulfilled, (state, action) => {
+            state.pokemonsData.pokemonsFiltered = action.payload as Array<Pokemons>
+        })
+        builder.addCase(searchPokemons.rejected, (state, action) => {
+            
         })
     }
 
@@ -70,23 +79,21 @@ export const getPokemons = createAsyncThunk(
     }
 )
 
-export const filterOrGetPokemons = createAsyncThunk(
-    'pokemons/filterPokemons',
-    async (name: any, thunkAPI) => {
-        const { rejectWithValue, getState } = thunkAPI;
-        const state: any = getState()
-        const aver = state.pokemonsReducer.pokemons.filter((poke: any) => poke.name.includes(name))
-        if (aver.length === 0) {
-            const resp = await fetch(`https://pokeapi.co/api/v2/pokemon/${name.trim().toLocaleLowerCase()}`)
-            const respToJson = await resp.json();
-            return MapePokemons([respToJson]);
+export const searchPokemons = createAsyncThunk(
+    'pokemons/searchPokemons',
+    async (nameOfPokemon: string, { getState }) => {
+        if(nameOfPokemon.length === 0) return []
+        const nameOfPokemonClean = nameOfPokemon.trim().toLocaleLowerCase();
+        const {pokemonsSlice} = getState() as RootState;
+        const pokemonsFilterByName = pokemonsSlice.pokemonsData.pokemons.filter((poke: any) => poke.name.includes(nameOfPokemonClean))
+        if (pokemonsFilterByName.length === 0) {
+            const pokemonFromApi = await fetchPokemon(nameOfPokemonClean);
+            return MapePokemons([pokemonFromApi]);
         } else {
-            return aver;
+            return pokemonsFilterByName;
         }
     }
 )
-
-
 
 export const { getMorePokemons, resetState } = pokemonSlice.actions;
 

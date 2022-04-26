@@ -2,10 +2,9 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import MapePokemons from "../../helpers/DataMapperPokeApi"
 import { fetchPokemon, fetchPokemonEvolution } from "../../services/pokeApi"
 
-export interface DataEvo {
-    img: string
-    nameEvo: string
-    id: number
+interface PokemonDetailsSlice {
+    pokemon: PokemonDetails
+    loading: null | 'loading' | 'success' | 'failed'
 }
 
 interface PokemonDetails {
@@ -15,32 +14,14 @@ interface PokemonDetails {
     img: string
     abilities: Array<string>
     dataEvo: Array<DataEvo>
-    weight: number
+    weight: number | string
 }
 
-interface PokemonDetailsSlice {
-    pokemon: PokemonDetails
-    loading: null | 'loading' | 'success' | 'failed'
+export interface DataEvo {
+    img: string
+    nameEvo: string
+    id: number
 }
-
-export const getPokemon = createAsyncThunk(
-    'pokemonDetails/getPokemon',
-    async (pokemonId: number) => {
-        const pokemon = await fetchPokemon(pokemonId);
-        const evolutions = await fetchPokemonEvolution(pokemonId);
-        const dataOfEvolutions = await Promise.all(
-            evolutions.map(async (name: any) => {
-                const { sprites, name: nameEvo, id } = await fetchPokemon(name);
-                return { img: sprites.other.dream_world.front_default, nameEvo, id }
-            })
-        )
-        const objeteiro = {
-            dataEvo: dataOfEvolutions
-        }
-        const dataJoined = Object.assign(pokemon, objeteiro)
-        return MapePokemons(dataJoined);
-    }
-)
 
 export const pokemonDetailsSlice = createSlice({
     name: 'pokemonDetails',
@@ -64,5 +45,26 @@ export const pokemonDetailsSlice = createSlice({
         })
     }
 })
+
+export const getPokemon = createAsyncThunk(
+    'pokemonDetails/getPokemon',
+    async (pokemonId: number) => {
+        const pokemon = await fetchPokemon(pokemonId);
+        const evolutions = await fetchPokemonEvolution(pokemonId);
+        const dataOfEvolutions = await Promise.all(
+            evolutions.map(async (name: any) => {
+                const { sprites, name: nameEvo, id } = await fetchPokemon(name);
+                return { img: sprites.other.dream_world.front_default, nameEvo, id }
+            })
+        )
+        const objeteiro = {
+            dataEvo: dataOfEvolutions
+        }
+        const dataJoined = Object.assign(pokemon, objeteiro)
+        return MapePokemons(dataJoined);
+    }
+)
+
+
 
 export default pokemonDetailsSlice.reducer;

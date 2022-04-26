@@ -3,8 +3,8 @@ import { useForm } from "../../../../hooks/useForm";
 
 import { AppDispatch } from "../../../../redux/interfaces";
 import { ContainerSearchFormStyled, TitleFormStyled, FormStyled, ButtonSearchStyled } from "./Style";
-import MapePokemons from "../../../../helpers/DataMapperPokeApi";
-import { filterOrGetPokemons } from "../../../../redux/slices/pokemonsSlice";
+
+import { searchPokemons } from "../../../../redux/slices/pokemonsSlice";
 
 const SearchForm = () => {
 
@@ -13,7 +13,7 @@ const SearchForm = () => {
 
     const handleFilterPokemons = async (e: any) => {
         e.preventDefault();
-        dispatch(filterOrGetPokemons(values.namePokemon));
+        dispatch(searchPokemons(values.namePokemon));
     }
 
     return (

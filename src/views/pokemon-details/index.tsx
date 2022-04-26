@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-
 import { AppDispatch, RootState } from "../../redux/interfaces";
 import { getPokemon } from "../../redux/slices/pokemonDetailsSlice";
 import Evolutions from "./Components/Evolutions";
@@ -17,26 +16,31 @@ const PokemonDetails = () => {
     const pokemonIdToInt = parseInt(pokemonId)
     const dispatch = useDispatch<AppDispatch>();
 
-    const { pokemon } = useSelector((state: RootState) => state.pokemonDetailsSlice)
+    const pokemonState = useSelector((state: RootState) => state.pokemonDetailsSlice)
+
 
     useEffect(() => {
         dispatch(getPokemon(pokemonIdToInt))
-    }, [dispatch,pokemonIdToInt])
+    }, [dispatch, pokemonIdToInt])
 
     return (
 
         <IndexStyled>
+            {
+                pokemonState.loading === 'loading'
+                    ? <h1>Loading...</h1>
+                    : <>
+                        <GoBackArrow />
 
-            <GoBackArrow />
+                        <NameAndId pokemonName={pokemonState.pokemon.name} pokemonId={pokemonId} />
 
-            <NameAndId pokemonName={pokemon.name} pokemonId={pokemonId} />
+                        <ImageAndInfo img={pokemonState.pokemon.img} imgAlt={pokemonState.pokemon.name} />
 
-            <ImageAndInfo img={pokemon.img} imgAlt={pokemon.name} />
+                        <Types types={pokemonState.pokemon.types} />
 
-            <Types types={pokemon.types} />
-
-            <Evolutions pokemonsEvo={pokemon.dataEvo} />
-
+                        <Evolutions pokemonsEvo={pokemonState.pokemon.dataEvo} />
+                    </>
+            }
         </IndexStyled>
     )
 }
