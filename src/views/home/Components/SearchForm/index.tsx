@@ -19,13 +19,12 @@ const SearchForm = () => {
     return (
         <ContainerSearchFormStyled>
             <TitleFormStyled>Search any pokemon</TitleFormStyled>
-            <small style={{color:"grey"}}>This input filter the pokemons on your view or search one pokemon by name</small>
-            <br />
-            <FormStyled onSubmit={handleFilterPokemons} autoComplete='off'>
+            <small style={{color:"grey", marginBottom:'10px'}}>This input filter the pokemons on your view or search one pokemon by name</small>
+            <FormStyled onSubmit={handleFilterPokemons} autoComplete='off' style={{marginBottom:'10px'}}>
                 <InputStyled type="text" name='namePokemon' value={values.namePokemon} onChange={handleChange} />
                 <ButtonSearchStyled className="fas fa-search"></ButtonSearchStyled>
             </FormStyled>
-            <br />
+            
             {pokemonsSlice.loadingFilter === 'loading' && <span>Filtering...</span>} 
         </ContainerSearchFormStyled>
     )
