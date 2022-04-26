@@ -1,2 +1,5 @@
 # THE ROUTE SYSTEM FOR THIS APP IS ADAPTED FORM GITHUB PAGES
-You can see in index.js in the App.jsx file the path atribute have '/pokedex-app/'
+The route sistem is adapted from githubpages, to run in localhost need put in your path
+localhost:YOUPORT/pokedex-app
+
+# npm start: TO RUN THE PROJECT
