@@ -13,7 +13,7 @@ const Pokemon = (props: PokemonProps) => {
 
     const handleViewPokemon = () => {
         dispatch(resetState());
-        navigate(`/${props.id}`)
+        navigate(`/pokedex-app/${props.id}`)
     }
 
     return (
