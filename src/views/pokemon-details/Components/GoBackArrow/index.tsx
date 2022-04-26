@@ -6,7 +6,7 @@ const GoBackArrow = () => {
     const navigate = useNavigate();
 
     return (
-        <GoBackArrowStyled className="fas fa-angle-left" onClick={() => navigate('/')}></GoBackArrowStyled>
+        <GoBackArrowStyled className="fas fa-angle-left" onClick={() => navigate('/pokedex-app')}></GoBackArrowStyled>
     )
 }
 

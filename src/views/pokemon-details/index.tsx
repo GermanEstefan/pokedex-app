@@ -14,6 +14,8 @@ const PokemonDetails = () => {
 
     const { pokemonId = '1' } = useParams();
     const pokemonIdToInt = parseInt(pokemonId)
+    console.log(pokemonId)
+    console.log(typeof pokemonId)
    
     const dispatch = useDispatch<AppDispatch>();
 

@@ -5,8 +5,9 @@ import Pokemon from "./views/pokemon-details";
 const App = () => (
   <BrowserRouter>
     <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/:pokemonId" element={<Pokemon />} />
+      <Route path="/pokedex-app/" element={<Home />} />
+      <Route path="/pokedex-app/:pokemonId" element={<Pokemon />} />
+      <Route path="*" element={<h1>This page doesnt exist</h1>} />
     </Routes>
   </BrowserRouter>
 )
