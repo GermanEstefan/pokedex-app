@@ -1,6 +1,7 @@
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../../../redux/interfaces";
 import { getMorePokemons } from "../../../../redux/slices/pokemonsSlice";
+import { ViewMorePokemonsStyled } from "./Style";
 
 const ViewMorePokemons = () => {
 
@@ -11,10 +12,9 @@ const ViewMorePokemons = () => {
     }
 
     return (
-        <button
-            onClick={handleViewMorePokemons}>
+        <ViewMorePokemonsStyled onClick={handleViewMorePokemons}>
             View more
-        </button>
+        </ViewMorePokemonsStyled>
     )
 }
 

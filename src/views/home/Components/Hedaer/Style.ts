@@ -5,6 +5,7 @@ export const HeaderStyled = styled.header`
     align-items:center;
     flex-direction:column;
     text-align:center;
+    padding: 0px 100px;
 `;
 
 export const TitleAndLinksStyled = styled.div`
@@ -17,6 +18,7 @@ export const LinksStyled = styled.div`
     position:absolute;
     right:30px;
     font-size:1.8rem;
+    color:#2178db;
 `;
 
 export const IconGitHubStyled = styled.i`
@@ -24,5 +26,5 @@ export const IconGitHubStyled = styled.i`
 `;
 
 export const InfoAppStyled = styled.p`
-    padding: 0px 20px 0px 20px;    
+    font-size:1.5rem;
 `;

@@ -4,6 +4,7 @@ import { getPokemons } from "../../../../redux/slices/pokemonsSlice";
 import { AppDispatch, RootState } from "../../../../redux/interfaces";
 import Pokemon from "../Pokemon";
 import { PokemonsContainerStyled } from "./Styles";
+import Loading from "../Loading";
 
 const Pokemons = () => {
 
@@ -39,7 +40,7 @@ const Pokemons = () => {
 
             }
 
-            {pokemonsState.loading === 'loading' && <h1>Loading...</h1>}
+            {pokemonsState.loading === 'loading' && <Loading/>}
 
         </PokemonsContainerStyled>
     )

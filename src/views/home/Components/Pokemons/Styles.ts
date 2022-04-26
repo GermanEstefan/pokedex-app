@@ -5,4 +5,5 @@ export const PokemonsContainerStyled = styled.div`
     flex-wrap:wrap;
     justify-content:center;
     padding: 0px 10px;
+    position:relative;
 `;

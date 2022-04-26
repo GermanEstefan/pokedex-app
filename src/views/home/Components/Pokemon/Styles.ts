@@ -7,8 +7,15 @@ interface propsTypePokemon {
 export const PokemonContainerStyled = styled.div`
     display:flex;
     flex-direction:column;
-    margin: 0px 30px 30px 0px;
+    margin: 0px 20px 0px 0px;
+    padding: 15px 25px;
     cursor: pointer;
+    border-radius: 5px;
+    transition: .3s ease-in;
+    &:hover{
+        outline:1px solid grey;
+        
+    }
 `;
 
 export const IdPokemonStyled = styled.span`
@@ -35,9 +42,10 @@ export const TypePokemonStyled = styled.li<propsTypePokemon>`
         : props.type === 'electric' ? '#ffff00'
         : props.type === 'flying' ? '#00ffff'
         : props.type === 'normal' ? '#669999'
+        : props.type === 'fairy' ? '#FF69B4'
         :'none'
     };
     border-radius: 3px;
-    padding: 3px;
+    padding: 8px 5px;
     margin-right: 10px;
 `;

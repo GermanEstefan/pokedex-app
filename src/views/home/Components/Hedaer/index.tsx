@@ -5,7 +5,7 @@ const Header = () => ((
 
         <TitleAndLinksStyled>
 
-            <h1>Pokedex</h1>
+            <h1 style={{color:"#2178db"}}>Pokedex</h1>
 
             <LinksStyled>
                 <IconGitHubStyled className="fab fa-github"></IconGitHubStyled>
@@ -15,9 +15,9 @@ const Header = () => ((
         </TitleAndLinksStyled>
 
         <InfoAppStyled>
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Suscipit nobis fugiat debitis error,
-            voluptatem soluta, sed adipisci deserunt, obcaecati tempora voluptate corporis quas mollitia
-            expedita? Voluptates recusandae nobis consequatur pariatur?
+            This app is maked with ReactJS - TypeScript and Redux Toolkit. This data
+            is provide from APIRest "PokeApi". The finality of this proyect is train
+            Redux Toolkit and TypeScript
         </InfoAppStyled>
 
     </HeaderStyled>

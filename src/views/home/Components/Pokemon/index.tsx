@@ -18,7 +18,7 @@ const Pokemon = (props: PokemonProps) => {
 
     return (
         <PokemonContainerStyled onClick={handleViewPokemon}>
-            <img src={props.img} alt={props.name} width='130px' height='130px' />
+            <img src={props.img} alt={props.name} width='150px' height='150px' />
             <IdPokemonStyled>Nº{props.id}</IdPokemonStyled>
             <strong>{capitalizeString(props.name)}</strong>
             <TypesPokemonStyled>

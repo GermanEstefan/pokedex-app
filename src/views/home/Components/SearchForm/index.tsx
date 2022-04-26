@@ -2,7 +2,7 @@ import { useDispatch } from "react-redux";
 import { useForm } from "../../../../hooks/useForm";
 
 import { AppDispatch } from "../../../../redux/interfaces";
-import { ContainerSearchFormStyled, TitleFormStyled, FormStyled, ButtonSearchStyled } from "./Style";
+import { ContainerSearchFormStyled,InputStyled, TitleFormStyled, FormStyled, ButtonSearchStyled } from "./Style";
 
 import { searchPokemons } from "../../../../redux/slices/pokemonsSlice";
 
@@ -19,8 +19,10 @@ const SearchForm = () => {
     return (
         <ContainerSearchFormStyled>
             <TitleFormStyled>Search any pokemon</TitleFormStyled>
-            <FormStyled onSubmit={handleFilterPokemons}>
-                <input type="text" name='namePokemon' value={values.namePokemon} onChange={handleChange} />
+            <small style={{color:"grey"}}>This input filter the pokemons on your view or search one pokemon by name</small>
+            <br />
+            <FormStyled onSubmit={handleFilterPokemons} autoComplete='off'>
+                <InputStyled type="text" name='namePokemon' value={values.namePokemon} onChange={handleChange} />
                 <ButtonSearchStyled className="fas fa-search"></ButtonSearchStyled>
             </FormStyled>
         </ContainerSearchFormStyled>
