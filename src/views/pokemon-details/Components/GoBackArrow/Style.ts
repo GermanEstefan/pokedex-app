@@ -6,6 +6,7 @@ export const GoBackArrowStyled = styled.i`
     top: 10px;
     left:20px;
     font-size: 3.5rem;
+    color:#2178db;
 `;
 
 export const TypesContainer = styled.div`

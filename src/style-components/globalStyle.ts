@@ -10,4 +10,8 @@ export const GlobalStyles = createGlobalStyle`
     i{
         cursor:pointer;
     }
+    ul{
+        padding:0;
+        list-style: none;
+    }
 `;

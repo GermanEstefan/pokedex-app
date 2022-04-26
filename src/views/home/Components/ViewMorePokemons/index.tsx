@@ -1,6 +1,6 @@
 import { useDispatch } from "react-redux";
-import { AppDispatch } from "../../../../redux/interfaces";
 import { getMorePokemons } from "../../../../redux/slices/pokemonsSlice";
+import { AppDispatch } from "../../../../redux/store";
 import { ViewMorePokemonsStyled } from "./Style";
 
 const ViewMorePokemons = () => {

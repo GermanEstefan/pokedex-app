@@ -1,15 +1,15 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "../../../../hooks/useForm";
-
-import { AppDispatch } from "../../../../redux/interfaces";
 import { ContainerSearchFormStyled,InputStyled, TitleFormStyled, FormStyled, ButtonSearchStyled } from "./Style";
-
 import { searchPokemons } from "../../../../redux/slices/pokemonsSlice";
+import { AppDispatch, RootState } from "../../../../redux/store";
+
 
 const SearchForm = () => {
 
     const dispatch = useDispatch<AppDispatch>();
     const { values, handleChange } = useForm({ namePokemon: '' });
+    const {pokemonsSlice} = useSelector((state: RootState) => state);
 
     const handleFilterPokemons = async (e: any) => {
         e.preventDefault();
@@ -25,6 +25,8 @@ const SearchForm = () => {
                 <InputStyled type="text" name='namePokemon' value={values.namePokemon} onChange={handleChange} />
                 <ButtonSearchStyled className="fas fa-search"></ButtonSearchStyled>
             </FormStyled>
+            <br />
+            {pokemonsSlice.loadingFilter === 'loading' && <span>Filtering...</span>} 
         </ContainerSearchFormStyled>
     )
 };

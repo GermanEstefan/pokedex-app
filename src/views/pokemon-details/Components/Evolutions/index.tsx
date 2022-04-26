@@ -1,3 +1,4 @@
+import { capitalizeString } from "../../../../helpers/capitalizeString";
 import { DataEvo } from "../../../../redux/slices/pokemonDetailsSlice";
 import { ContainerEvolutionsStyled, EvolutionContainerStytled, PokemonEvolutionStyled } from "./Styles";
 
@@ -8,12 +9,12 @@ interface EvolutionsProps {
 const Evolutions = (props: EvolutionsProps) => {
     return (
         <EvolutionContainerStytled>
-            <h2>Evolutions:</h2>
+            <h2 style={{color:'#2178db'}}>Evolutions:</h2>
             <ContainerEvolutionsStyled>
                 {
                     props.pokemonsEvo?.map(evo => (
                         <PokemonEvolutionStyled key={evo.nameEvo}>
-                            <strong>{evo.nameEvo}</strong>
+                            <strong>{evo.nameEvo && capitalizeString(evo.nameEvo)}</strong>
                             <br />
                             <img src={evo.img} alt={evo.nameEvo} width="130px" height="130px" />
                         </PokemonEvolutionStyled>

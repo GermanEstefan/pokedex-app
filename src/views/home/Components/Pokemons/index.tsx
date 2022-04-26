@@ -1,10 +1,11 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getPokemons } from "../../../../redux/slices/pokemonsSlice";
-import { AppDispatch, RootState } from "../../../../redux/interfaces";
+
 import Pokemon from "../Pokemon";
 import { PokemonsContainerStyled } from "./Styles";
 import Loading from "../Loading";
+import { AppDispatch, RootState } from "../../../../redux/store";
 
 const Pokemons = () => {
 

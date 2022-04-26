@@ -1,17 +1,19 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import MapePokemons from "../../helpers/DataMapperPokeApi";
 import { fetchPokemon, fetchPokemons } from "../../services/pokeApi";
-import { RootState } from "../interfaces";
+import Swal from 'sweetalert2';
+import { RootState } from "../store";
 
 interface PokemonsSlice {
     pokemonsData: PokemonsData
     loading: 'loading' | 'success' | 'failed'
+    loadingFilter: null | 'loading' | 'success' | 'failed'
 }
 
 interface PokemonsData {
     countRange: countRange
     pokemons: Array<Pokemons>
-    pokemonsFiltered: Array<Pokemons> 
+    pokemonsFiltered: Array<Pokemons>
 }
 
 interface countRange {
@@ -35,9 +37,10 @@ export const pokemonSlice = createSlice({
                 end: 20
             },
             pokemons: [],
-            pokemonsFiltered:[]
+            pokemonsFiltered: []
         },
         loading: 'loading',
+        loadingFilter: null
     } as PokemonsSlice,
     reducers: {
         getMorePokemons: (state) => {
@@ -52,7 +55,7 @@ export const pokemonSlice = createSlice({
         }
     },
     extraReducers: (builder) => {
-        
+
         builder.addCase(getPokemons.pending, (state) => {
             state.loading = 'loading'
         })
@@ -61,12 +64,23 @@ export const pokemonSlice = createSlice({
             state.loading = 'success'
         })
 
+        builder.addCase(searchPokemons.pending, (state, action) => {
+            state.loadingFilter = 'loading'
+        })
         builder.addCase(searchPokemons.fulfilled, (state, action) => {
             state.pokemonsData.pokemonsFiltered = action.payload as Array<Pokemons>
+            state.loadingFilter = 'success'
         })
-        builder.addCase(searchPokemons.rejected, (state, action) => {
-            
+        builder.addCase(searchPokemons.rejected, (state) => {
+            state.loadingFilter = 'success'
+            Swal.fire({
+                title: 'Error',
+                text: 'Pokemon name is invalid',
+                icon: 'error',
+                confirmButtonText: 'Cool'
+            })
         })
+        
     }
 
 });
@@ -82,9 +96,9 @@ export const getPokemons = createAsyncThunk(
 export const searchPokemons = createAsyncThunk(
     'pokemons/searchPokemons',
     async (nameOfPokemon: string, { getState }) => {
-        if(nameOfPokemon.length === 0) return []
+        if (nameOfPokemon.length === 0) return []
         const nameOfPokemonClean = nameOfPokemon.trim().toLocaleLowerCase();
-        const {pokemonsSlice} = getState() as RootState;
+        const { pokemonsSlice } = getState() as RootState;
         const pokemonsFilterByName = pokemonsSlice.pokemonsData.pokemons.filter((poke: any) => poke.name.includes(nameOfPokemonClean))
         if (pokemonsFilterByName.length === 0) {
             const pokemonFromApi = await fetchPokemon(nameOfPokemonClean);

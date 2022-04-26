@@ -29,7 +29,7 @@ export const TypesPokemonStyled = styled.ul`
 `;
 
 export const TypePokemonStyled = styled.li<propsTypePokemon>`
-    color:#f2f2f2;
+    font-weight:bold;
     background-color: ${
         props => props.type === 'poison' ? '#009933' 
         : props.type === 'water' ? '#2A5DE1'
@@ -43,8 +43,16 @@ export const TypePokemonStyled = styled.li<propsTypePokemon>`
         : props.type === 'flying' ? '#00ffff'
         : props.type === 'normal' ? '#669999'
         : props.type === 'fairy' ? '#FF69B4'
+        : props.type === 'fighting' ? '#FF11B4'
+        : props.type === 'psychic' ? '#A116C3'
+        : props.type === 'steel' ? '#808080'
+        : props.type === 'ice' ? '#CAFFFC'
+        : props.type === 'rock' ? '#7A5F46'
+        : props.type === 'dragon' ? 'red'
+        : props.type === 'ghost' ? '#5C5855'
         :'none'
     };
+    color: ${props => props.type === 'dark' ? 'white' : 'black'};
     border-radius: 3px;
     padding: 8px 5px;
     margin-right: 10px;

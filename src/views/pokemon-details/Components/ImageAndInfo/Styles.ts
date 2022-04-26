@@ -6,10 +6,24 @@ export const ImageAndInfoStyled = styled.div`
 `;
 
 export const ImageStyled = styled.img`
-    margin-right: 20px;
+    margin-right: 50px;
 `;
 
 export const InfoContainerStyled = styled.div`
-    border:1px solid black;
-    padding: 10px 20px 10px 20px;
+    border:2px solid #2178db;
+    border-radius:5px;
+    padding: 20px 30px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+`;
+
+export const InfoContainerSonStyled = styled.div`
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+`;
+
+export const InfoContainerSonLisItemStyled = styled.li`
+    margin-bottom:7px;
 `;

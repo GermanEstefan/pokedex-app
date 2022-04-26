@@ -15,6 +15,12 @@ interface PokemonDetails {
     abilities: Array<string>
     dataEvo: Array<DataEvo>
     weight: number | string
+    stats: Array<Stats>
+}
+
+export interface Stats{
+    statName: string
+    points: number
 }
 
 export interface DataEvo {
@@ -50,6 +56,8 @@ export const getPokemon = createAsyncThunk(
     'pokemonDetails/getPokemon',
     async (pokemonId: number) => {
         const pokemon = await fetchPokemon(pokemonId);
+        //The evolution chain is not provider in endpoint of pokemons data
+        //Needs fetch another endpoint from get evolutions
         const evolutions = await fetchPokemonEvolution(pokemonId);
         const dataOfEvolutions = await Promise.all(
             evolutions.map(async (name: any) => {
@@ -57,10 +65,10 @@ export const getPokemon = createAsyncThunk(
                 return { img: sprites.other.dream_world.front_default, nameEvo, id }
             })
         )
-        const objeteiro = {
+        const dataOfEvoToObj = { //This step is for join data of evo and data of pokemon 
             dataEvo: dataOfEvolutions
         }
-        const dataJoined = Object.assign(pokemon, objeteiro)
+        const dataJoined = Object.assign(pokemon, dataOfEvoToObj)
         return MapePokemons(dataJoined);
     }
 )
